@@ -2,9 +2,11 @@ name: Publish Package to GitHub NPM Registry
 
 on: 
   release:
-    types: [published]
+    types: published
 
 jobs:
+    permissions:
+        packages: write
     npm-package:
       runs-on: ubuntu-latest
       steps:
@@ -19,3 +21,8 @@ jobs:
 
         - name: install Dependencies
           run: npm install
+
+        - name: Publish Package
+          run: npm publish
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
